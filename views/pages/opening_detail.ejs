@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= locals.title %></title>
+  <% include ../partials/stylesheet %>
+</head> 
+<body>
+    <% include ../partials/header_alluser %>
+
+        <% if (locals.errors) { %>
+            <p class="text-danger"><%= locals.errors %></p>
+        <% } %>
+        <h1 class="h1 mb-1 font-weight-normal">Opening: <%= locals.opening.projectname %></h1>
+        
+        <P><strong>Project Name: </strong><%= locals.opening.projectname %></P>
+
+        <P><strong>Client Name: </strong><%= locals.opening.clientname %></P>
+
+        <P><strong>Role: </strong><%= locals.opening.role %></P>
+
+        <P><strong>Technologies: </strong><%= locals.opening.technologies %></P>
+
+        <P><strong>Job Description: </strong><%= locals.opening.jobdescription %></P>
+
+        <button type="submit" onclick="applyForOpening()">Apply</button>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script type='text/javascript'>
+            
+            async function applyForOpening(){
+
+                // here we have to send the current user who is using the application to the post request
+                console.log('someone just applied for this opening...');
+
+                let jwt = 'tempjwt';
+                let userID = '5f866f8875bdf06048a53ce2';
+                let openingID= '5f8a02e4fa9a5f51bc9ccd4e'
+
+                let ourURL = '/catalog/opening/'+openingID+'/'+userID;
+                let ourHeader = 'Bearer '+jwt;
+                const config = {
+                    method: 'post',
+                    url: ourURL,
+                    headers: {'Authorization': ourHeader}
+                }
+                
+                let result = await axios(config);
+
+                console.log(result.data);
+                document.body.innerHTML = result.data;
+            }
+
+        </script>
+
+    <% include ../partials/javascript %>
+ </body>
+ </html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= locals.title %></title>
+  <% include ../partials/stylesheet %>
+</head> 
+<body>
+    <% include ../partials/header_alluser %>
+    <div class="text-center">
+        <form class="form-opening-update" method="POST" action="/catalog/opening/update">
+            <% if (locals.errors) { %>
+                <p class="text-danger"><%= locals.errors %></p>
+            <% } %>
+            <h1 class="h1 mb-1 font-weight-normal"><%= locals.title %></h1>
+            <lable for="projectname" class="sr-only"> Project Name</lable>
+            <input type="text" name="projectname" id="projectname" class="form-control" placeholder="Project Name" required autofocus value= <%= undefined === locals.opening ? '' : locals.opening.projectname %> >
+
+            <lable for="clientname" class="sr-only"> Client Name</lable>
+            <input type="text" name="clientname" id="clientname" class="form-control" placeholder="Client Name" required value= <%= undefined === locals.opening ? '' : locals.opening.clientname %> >
+
+            <lable for="technologies" class="sr-only"> Technologies</lable>
+            <input type="text" name="technologies" id="technologies" class="form-control" placeholder="Technologies" required value= <%= undefined === locals.opening ? '' : locals.opening.technologies %> >
+
+            <lable for="role" class="sr-only"> Role</lable>
+            <input type="text" name="role" id="role" class="form-control" placeholder="Role" required value= <%= undefined === locals.opening ? '' : locals.opening.role %> >
+
+            <lable for="jobdescription" class="sr-only"> Job Description</lable>
+            <input type="text" name="jobdescription" id="jobdescription" class="form-control" placeholder="Job Description" required value= <%= undefined === locals.opening ? '' : locals.opening.jobdescription %> >
+            
+            <lable for="status" class="sr-only"> Status</lable>
+            <input type="radio" id="open" name="status" value= <%= undefined === locals.opening ? '' : locals.opening.status === 'Open' ? checked : ''   %> >
+            <label for="open">Open</label><br>
+            <input type="radio" id="closed" name="status" value = <%= undefined === locals.opening ? '' : locals.opening.status === 'Closed' ? checked : '' %>>
+            <label for="closed">Closed</label><br>
+
+            <button class="btn btn-lg btn-primary" type="submit"> Create</button> 
+        </form>
+    </div>
+    <% include ../partials/javascript %>
+ </body>
+ </html>

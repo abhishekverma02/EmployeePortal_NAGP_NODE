@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= locals.title %></title>
+  <% include ../partials/stylesheet %>
+</head> 
+<body>
+    <% include ../partials/header_alluser %>
+
+        <% if (locals.errors) { %>
+            <p class="text-danger"><%= locals.errors %></p>
+        <% } %>
+        <h1 class="h1 mb-1 font-weight-normal"><%= locals.title %></h1>
+
+        <ul>
+            <% locals.openings.sort(function(a,b){ let textA = a.projectname.toUpperCase(); let textB = b.projectname.toUpperCase(); return (textA<textB)?-1:(textA > textB )?1:0;  })  %>
+            <!-- <% for(let opening in locals.openings){ %>
+                <li>
+                    <a href="<%= opening.clientname %>"> <%= opening.projectname %> </a><%= opening.role%> <%= opening.technologies %> 
+                </li>
+            <% } %> -->
+            <% locals.openings.forEach(function(opening) { %>
+                <li>
+                    <strong><a href="<%= opening.url %>"> <%= opening.projectname %> </a></strong>
+                    Role: <%= opening.role %>, Technologies: <%= opening.technologies %>
+                </li>
+            <% }); %>
+        </ul>
+        
+    <% include ../partials/javascript %>
+ </body>
+ </html>

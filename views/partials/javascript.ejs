@@ -1,0 +1,30 @@
+<!-- JS Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type='text/javascript'>
+
+let token = JSON.parse(sessionStorage.getItem('EmployPortalUserToken'));
+
+let h = new Headers();
+h.append('Authorization', `Bearer ${token}`);
+
+let a = document.getElementsByTagName("a");
+
+for(i=0; i<a.length; ++i)
+{
+    a[i].addEventListener("click", async function(e){
+    e.preventDefault();
+    
+    let response = await fetch(this.href,{
+        method: 'get',
+        headers: h
+    })
+
+    let data = await response.text();
+
+    document.body.innerHTML = data;
+
+    })
+}
+
+</script>

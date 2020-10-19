@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= locals.title %></title>
+   <% include ../partials/loginsignupStylesheet %>
+</head> 
+<body>
+    <% include ../partials/header_alluser %>
+    <div class="text-center">
+        <form class="form-signin" id="myForm" name="myForm" method="POST" action="/auth/login">
+            <% if (locals.error) { %>
+                <p class="text-danger"><%= locals.error %></p>
+            <% } %>
+            <h1 class="h3 mb-3 font-weight-normal">Login </h1>
+            <lable for="username" class="sr-only"> Username</lable>
+            <input type="text" name="username" id="username" class="form-control" placeholder="Username..." required autofocus>
+
+            <lable for="password" class="sr-only"> Password</lable>
+            <input type="password" name="password" id="inputpassword" class="form-control" placeholder="Password" required>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit"> Login</button>
+
+        </form>
+    </div>
+    <script>
+    
+    let myForm = document.getElementById('myForm');
+    
+    myForm.addEventListener('submit',async function(e){
+        e.preventDefault();
+        console.log(this);
+        const formData = new FormData(this);
+        const searchParams = new URLSearchParams();
+
+        for(const pair of formData)
+        {
+            searchParams.append(pair[0], pair[1]);
+        }
+
+        let response = await fetch('/auth/login',{
+            method: 'post',
+            body: searchParams
+        })
+
+        let data = await response.json();
+
+        console.log(data);
+
+        console.log('token: '+data.token);
+
+        sessionStorage.setItem('EmployPortalUserToken',
+            JSON.stringify(data.token)
+        )
+
+        let redirectResponse = await fetch('/',{
+            method: 'get',
+        })
+
+        let newPage = await redirectResponse.text();
+        console.log(newPage);
+    
+        document.body.innerHTML = newPage;
+
+
+
+
+        })
+    
+
+
+
+        
+    
+    
+    
+    
+    </script>
+
+
+    <% include ../partials/javascript %>
+ </body>
+ </html>
